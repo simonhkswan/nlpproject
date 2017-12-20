@@ -1,4 +1,4 @@
-# Applying new methods for relation extraction and negation to biomedical text mining
+# <span style="font-variant: small-caps"> Applying new methods for relation extraction and negation to biomedical text mining </span>
 
 With the large volume of biomedical information published on a day-to-day basis, there is an increasing demand for the application of natural language processing techniques to literature-based discovery tools to assist in extracting information on diseases, genes, proteins and other biological concepts.
 There has been considerable development in machine learning models for natural language processing though many of these techniques have not yet been directly applied to biomedical text mining.

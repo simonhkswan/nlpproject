@@ -96,5 +96,9 @@ The development, training and testing of models will be done using the TensorFlo
 
 [11] Pyysalo, S., Ohta, T., and Ananiadou, S. Overview of the Cancer Genetics (CG) task of BioNLP Shared Task 2013. Proceedings of the BioNLP Shared Task 2013 Workshop (2013), 58–66.
 
-[12] Swanson, D. R., and Smalheiser, N. R. An interactive system for ﬁnding complementary literatures: A stimulus to scientiﬁc discovery. Artiﬁcial Intelligence 91, 2 (1997), 183–203. [13] Vincze, V., Szarvas, G., Farkas, R., M´ora, G., and Csirik, J. The BioScope corpus: biomedical texts annotated for uncertainty, negation and their scopes. BMC Bioinformatics 9, Suppl 11 (2008), S9.
+[12] Swanson, D. R., and Smalheiser, N. R. An interactive system for ﬁnding complementary literatures: A stimulus to scientiﬁc discovery. Artiﬁcial Intelligence 91, 2 (1997), 183–203. 
+
+[13] Vincze, V., Szarvas, G., Farkas, R., M´ora, G., and Csirik, J. The BioScope corpus: biomedical texts annotated for uncertainty, negation and their scopes. BMC Bioinformatics 9, Suppl 11 (2008), S9.
+
+[14] Chollet, F. et al, Keras (2015), GitHub, https://github.com/keras-team/keras. 
 

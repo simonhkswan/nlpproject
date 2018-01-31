@@ -17,9 +17,8 @@ from sklearn.preprocessing import normalize
 from keras.preprocessing.text import text_to_word_sequence
 from keras.preprocessing.sequence import pad_sequences
 
-def maybe_download(url, name):
+def maybe_download(url, name, dl_PATH):
     
-    global dl_PATH
     
     if not os.path.exists(dl_PATH):
         os.makedirs(dl_PATH)
@@ -34,9 +33,8 @@ def maybe_download(url, name):
             print('Error downloading '+name+'.')
         
 
-def maybe_unzip(zname):
+def maybe_unzip(zname, dl_PATH):
     
-    global dl_PATH
     
     if not os.path.isfile(dl_PATH+'task1_train_bio_abstracts_rev2.xml'):
         with zipfile.ZipFile(dl_PATH+zname, 'r') as zipref:
@@ -139,6 +137,17 @@ def word2index(words, embed_dict):
             indexed.append(embed_dict['UNK'])
     return(indexed)
 
+def import_embedding(location):
+
+    embed_dict={}
+    index=0
+    with open(location, 'r') as fr:
+        data = fr.readlines()
+        for word in data:
+            embed_dict[word[:-1]]=index
+            index+=1
+    return(embed_dict)
+
 
 def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False):
     # Creates a list of input data for training the RNN. 
@@ -200,7 +209,9 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False):
     return(batches)    
 
 
-def confusion_matrix(cm, threshold=50, filename=None, display=True)
+def conf_matrix(y_true, y_pred, threshold=50, filename=None, display=True):
+    
+    cm = confusion_matrix(y_true,y_pred)
     cm2 = normalize(cm,axis=1,norm='l1')
     fig3 = plt.figure()
     ax3 = fig3.gca()

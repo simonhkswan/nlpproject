@@ -17,8 +17,9 @@ from sklearn.preprocessing import normalize
 from keras.preprocessing.text import text_to_word_sequence
 from keras.preprocessing.sequence import pad_sequences
 
+dl_PATH = './downloads/'
+
 def maybe_download(url, name, dl_PATH):
-    
     
     if not os.path.exists(dl_PATH):
         os.makedirs(dl_PATH)
@@ -34,8 +35,7 @@ def maybe_download(url, name, dl_PATH):
         
 
 def maybe_unzip(zname, dl_PATH):
-    
-    
+       
     if not os.path.isfile(dl_PATH+'task1_train_bio_abstracts_rev2.xml'):
         with zipfile.ZipFile(dl_PATH+zname, 'r') as zipref:
             zipref.extractall(dl_PATH)

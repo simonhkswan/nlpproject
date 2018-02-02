@@ -216,7 +216,7 @@ def conf_matrix(y_true, y_pred, threshold=50, filename=None, display=True):
     fig3 = plt.figure()
     ax3 = fig3.gca()
     res = ax3.imshow(np.array(cm2*100), cmap=plt.cm.RdPu)
-    width, height = CM.shape
+    width, height = cm.shape
     threshold = 0.5
 
     for x in range(width):

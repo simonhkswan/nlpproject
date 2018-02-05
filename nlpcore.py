@@ -35,12 +35,9 @@ def maybe_download(url, name):
         
 
 def maybe_unzip(zname):
-       
-    if not os.path.isfile(dl_PATH+'task1_train_bio_abstracts_rev2.xml'):
-        with zipfile.ZipFile(dl_PATH+zname, 'r') as zipref:
+    with zipfile.ZipFile(dl_PATH+zname, 'r') as zipref:
             zipref.extractall(dl_PATH)
-    else:
-        print(zname+' already unzipped.')
+    print(zname+' unzipped.')
 
 
 class TextData(object):

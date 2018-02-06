@@ -35,6 +35,7 @@ def maybe_download(url, name):
         
 
 def maybe_unzip(zname):
+
     with zipfile.ZipFile(dl_PATH+zname, 'r') as zipref:
             zipref.extractall(dl_PATH)
     print(zname+' unzipped.')
@@ -78,8 +79,13 @@ def toString(sentElement):
     ccuelen = len(sentElement.getchildren())
     if ccuelen > 0:
         for i in range(ccuelen):
-            sent += sentElement[i].text
-            sent += sentElement[i].tail
+            if sentElement[i].tag == 'xcope':
+                sent += toString(sentElement[i])
+                sent += sentElement[i].tail
+            elif sentElement[i].tag == 'cue':
+                sent += sentElement[i].text
+                if sentElement[i].tail != None:
+                    sent += sentElement[i].tail
     return(sent)
 
 

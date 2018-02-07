@@ -105,6 +105,15 @@ def isCertain(sentElement):
                 return(False)
     return(True) 
 
+
+def hasNegation(sentElement):
+
+    for ele in sentElement.iter():
+        if ele.tag =='cue':
+            if ele.attrib['type'] == 'negation':
+                return(True)
+    return(False)
+
     
 def get_cues(sentElement):
 

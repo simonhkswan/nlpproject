@@ -99,10 +99,11 @@ def toStrings(sentElements):
 
 def isCertain(sentElement):
 
-    if sentElement.attrib['certainty'] == 'certain':
-        return(True)
-    else:
-        return(False)
+    for ele in sentElement.iter():
+        if ele.tag == 'cue':
+            if ele.attrib['type'] == 'speculation':
+                return(False)
+    return(True) 
 
     
 def get_cues(sentElement):

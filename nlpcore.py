@@ -130,6 +130,86 @@ def cue_positions(sentElement):
         positions.append(pos)
     return(positions[::-1])
 
+
+def eleList(sentElement):
+
+    elements = []
+    if len(sentElement.getchildren()) == 0:
+        return([sentElement])
+    else:
+        elements.extend([sentElement])
+        for child in sentElement.getchildren():
+            elements.extend(eleList(child))
+        return([elements])
+
+
+def tree_Seperation(ele):
+
+    num = []
+    if type(ele) != type([]):
+        if ele.text == None:
+            num.append(0)
+        else:
+            #num.append(len(ele.text.split()))
+            num.append(len(text_to_word_sequence(ele.text,
+                                     filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+                                     lower=True,
+                                     split=" ")))
+        if ele.tail == None:
+            num.append(0)
+        else:
+            #num.append(len(ele.tail.split()))
+            num.append(len(text_to_word_sequence(ele.tail,
+                                     filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+                                     lower=True,
+                                     split=" ")))
+    else:
+        if ele[0].text == None:
+            num.append(0)
+        else:
+            #num.append(len(ele[0].text.split()))
+            num.append(len(text_to_word_sequence(ele[0].text,
+                                     filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+                                     lower=True,
+                                     split=" ")))
+        for i in range(1,len(ele)):
+            num.extend(nestlen(ele[i]))
+        if ele[0].tail == None:
+            num.append(0)
+        else:
+            #num.append(len(ele[0].tail.split()))
+            num.append(len(text_to_word_sequence(ele[0].tail,
+                                     filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+                                     lower=True,
+                                     split=" ")))
+    return(num)
+
+
+def unravel(ele):
+
+    unrvl = []
+    if type(ele) != type([]):
+        unrvl.append('<'+ele.tag[:3]+':'+ele.attrib['type'][:3]+':'+ele.attrib['ref'])
+        unrvl.append('>'+ele.tag[:3]+':'+ele.attrib['ref'])
+    else:
+        unrvl.append('<'+ele[0].tag[:3]+':'+ele[0].attrib['id'])
+
+        for i in range(1, len(ele)):
+            unrvl.extend(unravel(ele[i]))
+        unrvl.append('>'+ele[0].tag[:3]+':'+ele[0].attrib['id'])
+    return(unrvl)
+
+
+def tree_Position(lenlist):
+    
+    positions = []
+    location = 0
+    for n in lenlist:
+        positions.append(location)
+        location+=n
+    return(positions)
+
+
 def word2index(words, embed_dict):
     # Takes a list of words and indexes them, returning a list of integers.
 

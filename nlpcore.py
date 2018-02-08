@@ -81,7 +81,8 @@ def toString(sentElement):
         for i in range(ccuelen):
             if sentElement[i].tag == 'xcope':
                 sent += toString(sentElement[i])
-                sent += sentElement[i].tail
+                if sentElement[i].tail != None:
+                    sent += sentElement[i].tail
             elif sentElement[i].tag == 'cue':
                 sent += sentElement[i].text
                 if sentElement[i].tail != None:
@@ -242,7 +243,7 @@ def import_embedding(location):
     return(embed_dict)
 
 
-def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, datatype='speculation'):
+def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, datatype='spec'):
     # Creates a list of input data for training the RNN. 
     # Each batch contains sentences with lengths binned into mulitples of 10.
 
@@ -261,9 +262,9 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, 
         size = int((len(words)+9)/10)
         if size <= max_size:
             indexed_words = word2index(words,embed_dict)
-            if datatype == 'speculation':
+            if datatype == 'spec':
                 certainty = hasSpeculation(sentence)
-            elif datatype == 'negation':
+            elif datatype == 'nega':
                 certainty = hasNegation(sentence)
             else:
                 print("Selected datatype doesn't exist.")

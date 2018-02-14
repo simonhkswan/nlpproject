@@ -1,5 +1,4 @@
 import os
-import os
 import urllib.request
 import zipfile
 import xml.etree.ElementTree as ET
@@ -20,10 +19,10 @@ from keras.preprocessing.sequence import pad_sequences
 dl_PATH = './downloads/'
 
 def maybe_download(url, name):
-    
+
     if not os.path.exists(dl_PATH):
         os.makedirs(dl_PATH)
-        
+
     if os.path.isfile(dl_PATH+name):
         print(name+' already downloaded.')
     else:
@@ -32,7 +31,7 @@ def maybe_download(url, name):
             print(name+' successfully downloaded.')
         except:
             print('Error downloading '+name+'.')
-        
+
 
 def maybe_unzip(zname):
 
@@ -46,22 +45,22 @@ class TextData(object):
     def __init__(self, xml):
         with open(dl_PATH+xml) as fd:
             self.ETree = ET.parse(fd)
-            
+
     def totaldocNo(self):
         return(len(self.get_documents()))
-        
+
     def totsentNo(self):
         N = 0
         for doc in self.getdocuments():
             N += len(doc[2][:])
         return(N)
-    
+
     def get_docs(self, start=None, stop=None):
         return(self.ETree.getroot()[0][start:stop])
-    
+
     def tosent(doc):
         return(doc[2][:])
-    
+
     def get_sentences(self):
         sentences = []
         for doc in self.get_docs():
@@ -96,7 +95,7 @@ def toStrings(sentElements):
     for element in sentElements:
         strings.append(toString(element))
     return(strings)
-    
+
 
 def hasSpeculation(sentElement):
 
@@ -104,7 +103,7 @@ def hasSpeculation(sentElement):
         if ele.tag == 'cue':
             if ele.attrib['type'] == 'speculation':
                 return(True)
-    return(False) 
+    return(False)
 
 
 def hasNegation(sentElement):
@@ -115,7 +114,7 @@ def hasNegation(sentElement):
                 return(True)
     return(False)
 
-    
+
 def get_cues(sentElement):
 
     return sentElement.getchildren()
@@ -211,7 +210,7 @@ def unravel(ele):
 
 
 def tree_Position(lenlist):
-    
+
     positions = []
     location = 0
     for n in lenlist:
@@ -244,7 +243,7 @@ def import_embedding(location):
 
 
 def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, datatype='spec'):
-    # Creates a list of input data for training the RNN. 
+    # Creates a list of input data for training the RNN.
     # Each batch contains sentences with lengths binned into mulitples of 10.
 
     max_size = int((maxlen+9)/10)
@@ -272,7 +271,7 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, 
             size_grouped[size-1].append(indexed_words)
             certainties_grouped[size-1].append([int(not certainty),int(certainty)])
     batches = []
-    
+
     sizehistx = []
     sizehisty = []
     l = 0
@@ -283,7 +282,7 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, 
         rd.shuffle(size_grouped[i])
         rd.seed(447)
         rd.shuffle(certainties_grouped[i])
-        
+
         numbatch = int(len(size_grouped[i])/batchsize)+1
         sizehisty.append(numbatch)
         size_grouped[i].extend(size_grouped[i][:10])
@@ -295,7 +294,7 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, 
                                    padding='pre',
                                    truncating='pre',
                                    value=0)
-            
+
             batches.append([padded, np.array(certainties_grouped[i][(j)*batchsize:(j+1)*batchsize])])
     if show_hist:
         fig2 = plt.figure(figsize=(7,3))
@@ -306,11 +305,11 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, 
         plt.bar(sizehistx,sizehisty,color=[0.7,0.1,0.2])
         plt.tight_layout()
         plt.show()
-    return(batches)    
+    return(batches)
 
 
 def conf_matrix(y_true, y_pred, threshold=50, filename=None, display=True):
-    
+
     cm = confusion_matrix(y_true,y_pred)
     cm2 = normalize(cm,axis=1,norm='l1')
     fig3 = plt.figure()
@@ -323,7 +322,7 @@ def conf_matrix(y_true, y_pred, threshold=50, filename=None, display=True):
         for y in range(height):
             if cm2[x][y] < threshold: col = [0,0,0]
             else: col = [1,1,1]
-            ax3.annotate('%d\n(%.1f%%)'%(cm[x][y],cm2[x][y]*100), xy=(y, x), 
+            ax3.annotate('%d\n(%.1f%%)'%(cm[x][y],cm2[x][y]*100), xy=(y, x),
                         horizontalalignment='center',
                         verticalalignment='center',color=col)
 

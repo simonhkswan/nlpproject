@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 import matplotlib.pyplot as plt
 import numpy as np
 import random as rd
+import sys
 
 import pydot
 import graphviz
@@ -22,6 +23,7 @@ def maybe_download(DATA_URL):
 
     if not os.path.exists(dl_PATH):
         os.makedirs(dl_PATH)
+        print('Dowloads path created.')
     filename = DATA_URL.split('/')[-1]
     filepath = os.path.join(dl_PATH, filename)
     if not os.path.exists(filepath):
@@ -29,17 +31,13 @@ def maybe_download(DATA_URL):
             sys.stdout.write('\r>> Downloading %s %.1f%%' % (filename,
             float(count * block_size) / float(total_size) * 100.0))
             sys.stdout.flush()
-    filepath, _ = urllib.request.urlretrieve(DATA_URL, filepath, _progress)
-    print()
-    statinfo = os.stat(filepath)
-    print('Successfully downloaded', filename, statinfo.st_size, 'bytes.')
-    extracted_dir_path = os.path.join(DATA_DIR, 'cifar-10-batches-py')
-
-def maybe_unzip(zname):
-
-    with zipfile.ZipFile(dl_PATH+zname, 'r') as zipref:
-            zipref.extractall(dl_PATH)
-    print(zname+' unzipped.')
+        filepath, _ = urllib.request.urlretrieve(DATA_URL, filepath, _progress)
+        print()
+        statinfo = os.stat(filepath)
+        print('Successfully downloaded', filename, statinfo.st_size, 'bytes.')
+        with zipfile.ZipFile(filepath, 'r') as zipref:
+                zipref.extractall(dl_PATH)
+        print('Successfully unzipped', filename)
 
 
 class TextData(object):

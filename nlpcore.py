@@ -18,20 +18,22 @@ from keras.preprocessing.sequence import pad_sequences
 
 dl_PATH = './downloads/'
 
-def maybe_download(url, name):
+def maybe_download(DATA_URL):
 
     if not os.path.exists(dl_PATH):
         os.makedirs(dl_PATH)
-
-    if os.path.isfile(dl_PATH+name):
-        print(name+' already downloaded.')
-    else:
-        try:
-            urllib.request.urlretrieve(url, dl_PATH+name)
-            print(name+' successfully downloaded.')
-        except:
-            print('Error downloading '+name+'.')
-
+    filename = DATA_URL.split('/')[-1]
+    filepath = os.path.join(dl_PATH, filename)
+    if not os.path.exists(filepath):
+        def _progress(count, block_size, total_size):
+            sys.stdout.write('\r>> Downloading %s %.1f%%' % (filename,
+            float(count * block_size) / float(total_size) * 100.0))
+            sys.stdout.flush()
+    filepath, _ = urllib.request.urlretrieve(DATA_URL, filepath, _progress)
+    print()
+    statinfo = os.stat(filepath)
+    print('Successfully downloaded', filename, statinfo.st_size, 'bytes.')
+    extracted_dir_path = os.path.join(DATA_DIR, 'cifar-10-batches-py')
 
 def maybe_unzip(zname):
 

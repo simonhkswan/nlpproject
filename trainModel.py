@@ -5,6 +5,7 @@ from keras.models import Sequential
 from keras.layers import Embedding,LSTM,Dense
 from keras.callbacks import TensorBoard,ModelCheckpoint,Callback
 from keras import backend as K
+from gensim.models import KeyedVectors
 
 dl=PATH = './downloads/'
 
@@ -19,7 +20,7 @@ for sentence in toStrings(sentences):
     total += 1
 print('%d Setences loaded.'%(total))
 
-embed_dict=import_embedding('./logs/word2vec_label.tsv')
+#embed_dict=import_embedding('./logs/word2vec_label.tsv')
 
 batches = generate_batches(sentences,80,10,embed_dict,show_hist=False)
 train=batches[:500]+batches[600:]
@@ -30,6 +31,8 @@ rd.shuffle(train)
 vocab_size = 5000
 embedding_dimension = 32
 batch_size = 10
+
+word_vectors = KeyedVectors.load_word2vec_format('./downlaods/PubMed-shuffle-win-2.bin', binary=True)
 
 model = Sequential()
 model.add(Embedding(vocab_size,embedding_dimension,name='word2vec',trainable=True))
@@ -72,7 +75,7 @@ model.compile(optimizer='RMSprop',
               sample_weight_mode=None,
               weighted_metrics=None,
               target_tensors=None)
-model.load_weights('./logs/wordvec_model.h5',by_name=True)
+#model.load_weights('./logs/wordvec_model.h5',by_name=True)
 model.summary()
 plot_model(model, to_file='./images/modalityLSTMmodel.png', show_shapes=True)
 

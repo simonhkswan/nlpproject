@@ -20,11 +20,11 @@ for sentence in toStrings(sentences):
     total += 1
 print('%d Setences loaded.'%(total))
 
-#embed_dict=import_embedding('./logs/word2vec_label.tsv')
+embed_dict=import_embedding('./logs/word2vec_label.tsv')
 
 batches = generate_batches(sentences,80,10,embed_dict,show_hist=False)
-train=batches[:500]+batches[600:]
-test=batches[500:600]
+train=batches[:500]+batches[510:]
+test=batches[500:510]
 rd.shuffle(test)
 rd.shuffle(train)
 
@@ -32,10 +32,12 @@ vocab_size = 5000
 embedding_dimension = 32
 batch_size = 10
 
-word_vectors = KeyedVectors.load_word2vec_format('./downlaods/PubMed-shuffle-win-2.bin', binary=True)
+print('Loading word vectors.')
+word_vectors = KeyedVectors.load_word2vec_format('./downloads/PubMed-shuffle-win-2.bin', binary=True)
+print('PubMed-shuffle-win-2.bin loaded.')
 
 model = Sequential()
-model.add(Embedding(vocab_size,embedding_dimension,name='word2vec',trainable=True))
+model.add(word_vectors.get_keras_embedding())
 model.add(LSTM(30,
                activation='tanh', # activation function used
                recurrent_activation='hard_sigmoid', # activation function for recurrent step
@@ -77,7 +79,7 @@ model.compile(optimizer='RMSprop',
               target_tensors=None)
 #model.load_weights('./logs/wordvec_model.h5',by_name=True)
 model.summary()
-plot_model(model, to_file='./images/modalityLSTMmodel.png', show_shapes=True)
+#plot_model(model, to_file='./images/modalityLSTMmodel.png', show_shapes=True)
 
 TC = TensorBoard(log_dir='./logs/modality', batch_size=batch_size,
                           histogram_freq=0, write_images=True,
@@ -90,6 +92,7 @@ for batch in test[1:]:
     vX = np.append(vX,batch[0],axis=0)
     vY = np.append(vY,batch[1],axis=0)
 
+'''
 epoch=0
 TC.set_model(model)
 TC.validation_data=(vX,vY)
@@ -104,3 +107,4 @@ for batch in train:
         print('Epoch: %d'%(epoch))
 
 TC.on_train_end(_)
+'''

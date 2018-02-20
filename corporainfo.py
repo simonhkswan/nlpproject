@@ -1,10 +1,10 @@
 from nlpcore import *
 
-maybe_download('http://rgai.inf.u-szeged.hu/~vinczev/conll2010st/task1_train_bio_rev2.zip')
-maybe_download('http://rgai.inf.u-szeged.hu/~vinczev/conll2010st/task2_train_bio_rev2.zip')
+maybe_download('http://rgai.inf.u-szeged.hu/~vinczev/conll2010st/task1_bio_eval.zip')
+maybe_download('http://rgai.inf.u-szeged.hu/~vinczev/conll2010st/task2_bio_eval.zip')
 maybe_download('http://rgai.inf.u-szeged.hu/project/nlp/bioscope/bioscope.zip')
 
-data = TextData('abstracts.xml')
+data = TextData('full_papers.xml')
 data2 = TextData('task1_bio_eval.xml')
 
 sentences = data.get_sentences()
@@ -28,9 +28,10 @@ print(spec_total,neg_total,total)
 
 fig1 = plt.figure(figsize=(7,3))
 ax1 = fig1.gca()
-ax1.set_title('Total Sentences')
+ax1.set_title('Speculation Sentences')
 ax1.set_ylabel('Number of sentences')
 ax1.set_xlabel('Number of words')
-plt.hist(sentence_lengths,bins=81,range=(0,80),color=[0.7,0.1,0.2])
+plt.hist(speculation_sentences,bins=81,range=(0,80),color=[0.14,0.5,0.58])
 plt.tight_layout()
-plt.savefig('./images/AbstractTotalHist.png',dpi=300)
+plt.show()
+plt.savefig('./images/FullpapersSpecultionHist.png',dpi=300)

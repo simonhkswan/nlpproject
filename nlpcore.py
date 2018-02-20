@@ -17,6 +17,7 @@ from sklearn.preprocessing import normalize
 from keras.preprocessing.text import text_to_word_sequence
 from keras.preprocessing.sequence import pad_sequences
 
+
 dl_PATH = './downloads/'
 
 def maybe_download(DATA_URL):

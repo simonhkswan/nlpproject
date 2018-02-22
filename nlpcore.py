@@ -100,6 +100,8 @@ def toStrings(sentElements):
 
 def hasSpeculation(sentElement):
 
+    if sentElement.get('certainty')=='uncertain':
+        return(True)
     for ele in sentElement.iter():
         if ele.tag == 'cue':
             if ele.attrib['type'] == 'speculation':

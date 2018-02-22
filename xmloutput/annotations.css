@@ -1,0 +1,7 @@
+cue {font-weight:bold}
+cue[type='negation'] {color: #AE2341; background-color: #ecb8c4}
+cue[type='speculation'] {color: #2E43B1; background-color: #aab6f2}
+xcope {text-decoration: underline;}
+DocumentPart[type="Title"] {display: block; line-height: 50px; font-size: 14pt; font-style: italic; font-weight: bold}
+DocumentPart {display: block; padding-left: 80px; padding-right: 80px;}
+DocID {line-height: 90px; padding-left: 40px}

@@ -236,22 +236,24 @@ def word2index(words, embed_dict):
 def import_embedding(location):
 
     embed_dict={}
-    index=0
     with open(location, 'r') as fr:
         data = fr.readlines()
-        for word in data:
-            embed_dict[word[:-1]]=index
-            index+=1
+        for line in data:
+            mapping = line.split(' ')
+            try:
+                embed_dict[mapping[0]]=mapping[1]
+            except IndexError:
+                continue
     return(embed_dict)
 
 
-def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, datatype='spec'):
+def generate_batches(sentences, maxlen, batchsize, embed_dict):
     # Creates a list of input data for training the RNN.
     # Each batch contains sentences with lengths binned into mulitples of 10.
 
     max_size = int((maxlen+9)/10)
     size_grouped = []
-    certainties_grouped = []
+    labels_grouped = []
     for i in range(max_size):
         size_grouped.append([])
         certainties_grouped.append([])
@@ -264,19 +266,12 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, 
         size = int((len(words)+9)/10)
         if size <= max_size:
             indexed_words = word2index(words,embed_dict)
-            if datatype == 'spec':
-                certainty = hasSpeculation(sentence)
-            elif datatype == 'nega':
-                certainty = hasNegation(sentence)
-            else:
-                print("Selected datatype doesn't exist.")
-                assert False
+            speculation = hasSpeculation(sentence)
+            certainty = hasNegation(sentence)
             size_grouped[size-1].append(indexed_words)
-            certainties_grouped[size-1].append([int(not certainty),int(certainty)])
+            labels_grouped[size-1].append([int(certainty),int(speculation)])
     batches = []
 
-    sizehistx = []
-    sizehisty = []
     l = 0
     for i in range(len(size_grouped)):
         l+=10
@@ -284,12 +279,9 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, 
         rd.seed(447)
         rd.shuffle(size_grouped[i])
         rd.seed(447)
-        rd.shuffle(certainties_grouped[i])
+        rd.shuffle(labels_grouped[i])
 
         numbatch = int(len(size_grouped[i])/batchsize)+1
-        sizehisty.append(numbatch)
-        size_grouped[i].extend(size_grouped[i][:10])
-        certainties_grouped[i].extend(certainties_grouped[i][:10])
         for j in range(numbatch):
             padded = pad_sequences(size_grouped[i][(j)*batchsize:(j+1)*batchsize],
                                    maxlen=l,
@@ -299,15 +291,6 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict, show_hist=False, 
                                    value=0)
 
             batches.append([padded, np.array(certainties_grouped[i][(j)*batchsize:(j+1)*batchsize])])
-    if show_hist:
-        fig2 = plt.figure(figsize=(7,3))
-        ax2 = fig2.gca()
-        ax2.set_title('Number of Batches per Sentence Length')
-        ax2.set_ylabel('Number of batches')
-        ax2.set_xlabel('Number of words')
-        plt.bar(sizehistx,sizehisty,color=[0.7,0.1,0.2])
-        plt.tight_layout()
-        plt.show()
     return(batches)
 
 

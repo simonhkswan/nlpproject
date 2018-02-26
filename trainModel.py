@@ -36,11 +36,6 @@ rd.shuffle(train)
 
 batch_size = 10
 
-print('Loading word vectors.')
-word_vectors = KeyedVectors.load_word2vec_format('./downloads/PubMed-shuffle-win-2.bin', binary=True)
-word_vectors.save_word2vec_format('./downloads/PubMed-shuffle-win-23.bin', fvocab='./downloads/PubMed-shuffle-win-2_vocab.tsv', binary=True)
-print('PubMed-shuffle-win-2.bin loaded.')
-
 model = Sequential()
 model.add(word_vectors.get_keras_embedding())
 model.add(LSTM(30,

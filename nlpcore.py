@@ -36,10 +36,11 @@ def maybe_download(DATA_URL):
         print()
         statinfo = os.stat(filepath)
         print('Successfully downloaded', filename, statinfo.st_size, 'bytes.')
-        with zipfile.ZipFile(filepath, 'r') as zipref:
+        if filename[-3:] == 'zip':
+            with zipfile.ZipFile(filepath, 'r') as zipref:
                 zipref.extractall(dl_PATH)
-        print('Successfully unzipped', filename)
-
+                print('Successfully unzipped', filename)
+    return()
 
 class TextData(object):
 

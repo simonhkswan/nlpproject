@@ -256,7 +256,7 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
     labels_grouped = []
     for i in range(max_size):
         size_grouped.append([])
-        certainties_grouped.append([])
+        labels_grouped.append([])
     for sentence in sentences:
         string = toString(sentence)
         words = text_to_word_sequence(string,
@@ -290,7 +290,7 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
                                    truncating='pre',
                                    value=0)
 
-            batches.append([padded, np.array(certainties_grouped[i][(j)*batchsize:(j+1)*batchsize])])
+            batches.append([padded, np.array(labels_grouped[i][(j)*batchsize:(j+1)*batchsize])])
     return(batches)
 
 

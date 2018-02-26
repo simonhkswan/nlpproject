@@ -10,6 +10,7 @@ from gensim.models import KeyedVectors
 dl=PATH = './downloads/'
 
 maybe_download('http://rgai.inf.u-szeged.hu/~vinczev/conll2010st/task1_train_bio_rev2.zip')
+maybe_download('https://nofile.io/f/PdTE3n32qNr/PubMed-shuffle-win-2.bin')
 data = TextData('task1_train_bio_abstracts_rev2.xml')
 
 sentences = data.get_sentences()
@@ -26,7 +27,7 @@ print('PubMed-shuffle-win-2.bin loaded.')
 word_vectors.save_word2vec_format('./downloads/PubMed-shuffle-win-2.bin', fvocab='./downloads/PubMed-shuffle-win-2_vocab.txt', binary=True)
 print('Embedding mapping saved.')
 embed_dict=import_embedding('./downloads/PubMed-shuffle-win-2_vocab.txt')
-print('Embedding dictionary loaded.')
+print('Embedding dictionary loaded, %d vectors in total.'%(len(embed_dict)))
 
 batches = generate_batches(sentences,80,10,embed_dict)
 train=batches[:500]+batches[510:]

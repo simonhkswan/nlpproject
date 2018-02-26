@@ -275,7 +275,6 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
     l = 0
     for i in range(len(size_grouped)):
         l+=10
-        sizehistx.append(str(l))
         rd.seed(447)
         rd.shuffle(size_grouped[i])
         rd.seed(447)

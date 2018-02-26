@@ -20,20 +20,25 @@ for sentence in toStrings(sentences):
     total += 1
 print('%d Setences loaded.'%(total))
 
-embed_dict=import_embedding('./logs/word2vec_label.tsv')
+print('Loading word vectors.')
+word_vectors = KeyedVectors.load_word2vec_format('./downloads/PubMed-shuffle-win-2.bin', binary=True)
+print('PubMed-shuffle-win-2.bin loaded.')
+word_vectors.save_word2vec_format('./downloads/PubMed-shuffle-win-2.bin', fvocab='./downloads/PubMed-shuffle-win-2_vocab.txt', binary=True)
+print('Embedding mapping saved.')
+embed_dict=import_embedding('./downloads/PubMed-shuffle-win-2_vocab.txt')
+print('Embedding dictionary loaded.')
 
-batches = generate_batches(sentences,80,10,embed_dict,show_hist=False)
+batches = generate_batches(sentences,80,10,embed_dict)
 train=batches[:500]+batches[510:]
 test=batches[500:510]
 rd.shuffle(test)
 rd.shuffle(train)
 
-vocab_size = 5000
-embedding_dimension = 32
 batch_size = 10
 
 print('Loading word vectors.')
 word_vectors = KeyedVectors.load_word2vec_format('./downloads/PubMed-shuffle-win-2.bin', binary=True)
+word_vectors.save_word2vec_format('./downloads/PubMed-shuffle-win-23.bin', fvocab='./downloads/PubMed-shuffle-win-2_vocab.tsv', binary=True)
 print('PubMed-shuffle-win-2.bin loaded.')
 
 model = Sequential()
@@ -62,7 +67,7 @@ model.add(LSTM(30,
                stateful=False, # If True, the last state for each sample at index i in a batch will be used as initial state for the sample of index i in the following batch.
                unroll=False)) # whether the network will be unrolled, otherwise a symbolic loop will be used.
 model.add(Dense(2,
-                activation='softmax',
+                activation='tanh',
                 use_bias=True,
                 kernel_initializer='glorot_uniform',
                 bias_initializer='zeros',
@@ -72,7 +77,7 @@ model.add(Dense(2,
                 kernel_constraint=None,
                 bias_constraint=None))
 model.compile(optimizer='RMSprop',
-              loss='categorical_crossentropy',
+              loss='binary_crossentropy',
               metrics=['acc'],
               sample_weight_mode=None,
               weighted_metrics=None,
@@ -81,7 +86,7 @@ model.compile(optimizer='RMSprop',
 model.summary()
 #plot_model(model, to_file='./images/modalityLSTMmodel.png', show_shapes=True)
 
-TC = TensorBoard(log_dir='./logs/modality', batch_size=batch_size,
+TC = TensorBoard(log_dir='./logs/LSTM_Neg_Spec', batch_size=batch_size,
                           histogram_freq=0, write_images=True,
                           write_grads=False, write_graph=True, embeddings_freq=1)
 model_checkpoint = ModelCheckpoint('./logs/modalityLSTMmodel.h5')
@@ -92,7 +97,6 @@ for batch in test[1:]:
     vX = np.append(vX,batch[0],axis=0)
     vY = np.append(vY,batch[1],axis=0)
 
-'''
 epoch=0
 TC.set_model(model)
 TC.validation_data=(vX,vY)
@@ -107,4 +111,3 @@ for batch in train:
         print('Epoch: %d'%(epoch))
 
 TC.on_train_end(_)
-'''

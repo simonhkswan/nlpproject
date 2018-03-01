@@ -8,9 +8,6 @@ import numpy as np
 import random as rd
 import sys
 
-import pydot
-import graphviz
-
 from sklearn.metrics import confusion_matrix
 from sklearn.preprocessing import normalize
 

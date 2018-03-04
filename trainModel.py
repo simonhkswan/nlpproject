@@ -30,7 +30,7 @@ print('Embedding dictionary loaded, %d vectors in total.'%(len(embed_dict)))
 batches = generate_batches(sentences,80,10,embed_dict)
 batches2 = generate_batches(sentences2,80,10,embed_dict)
 train=batches[:]
-test=batches2[30:60]
+test=batches2[30:50]
 rd.shuffle(test)
 rd.shuffle(train)
 
@@ -90,8 +90,12 @@ model_checkpoint = ModelCheckpoint('./logs/LSTMmodel.h5')
 vX = test[0][0]
 vY = test[0][1]
 for batch in test[1:]:
-    vX = np.append(vX,batch[0],axis=0)
-    vY = np.append(vY,batch[1],axis=0)
+    try:
+        vX = np.append(vX,batch[0],axis=0)
+        vY = np.append(vY,batch[1],axis=0)
+    except ValueError:
+        print('Batch lengths: ',len(batch[0]),len(batch[1]))
+        break
 
 epoch=0
 batchNO=0

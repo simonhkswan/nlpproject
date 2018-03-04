@@ -96,6 +96,7 @@ for i in range(10):
     for batch in train:
         vloss,vacc,batch2tot = 0,0,0
         for batch2 in test:
+            print(batch2)
             [vx,vy] = batch2
             [val_loss,val_acc] = model.test_on_batch(vx,vy)
             vloss += val_loss

@@ -82,10 +82,11 @@ model.compile(optimizer='RMSprop',
 model.summary()
 #plot_model(model, to_file='./images/modalityLSTMmodel.png', show_shapes=True)
 
-TC = TensorBoard(log_dir='./logs/LSTM_Neg_Spec', batch_size=batch_size,
-                          histogram_freq=0, write_images=True,
-                          write_grads=False, write_graph=True, embeddings_freq=1)
-model_checkpoint = ModelCheckpoint('./logs/modalityLSTMmodel.h5')
+#TC = TensorBoard(log_dir='./logs/LSTM_Neg_Spec', batch_size=batch_size,
+#                          histogram_freq=0, write_images=True,
+#                          write_grads=False, write_graph=True, embeddings_freq=1)
+
+model_checkpoint = ModelCheckpoint('./logs/LSTMmodel.h5')
 
 vX = test[0][0]
 vY = test[0][1]
@@ -94,16 +95,24 @@ for batch in test[1:]:
     vY = np.append(vY,batch[1],axis=0)
 
 epoch=0
-TC.set_model(model)
-TC.validation_data=(vX,vY)
+#TC.set_model(model)
+#TC.validation_data=(vX,vY)
+logOUT = []
 for batch in train:
     [x,y] = batch
     [loss, acc] = model.train_on_batch(x,y)
     [val_loss,val_acc] = model.test_on_batch(vX,vY)
     logs = {'acc': acc, 'loss': loss, 'val_loss': val_loss, 'val_acc': val_acc}
-    TC.on_epoch_end(epoch, logs)
+    #TC.on_epoch_end(epoch, logs)
     epoch += 1
+    logOUT.append([epoch,loss,acc,val_loss,val_acc])
     if epoch%50 == 0:
-        print('Epoch: %d'%(epoch))
+        print('Epoch: %d Validation accuracy: %f Validation loss: %f'%(epoch, val_acc, val_loss))
 
-TC.on_train_end(_)
+print('Saving training logs...')
+with open('./logs/LSTMmodelLOG.csv', 'w') as logFile:
+    writer = csv.writer(logFile)
+    writer.writerows(logOUT)
+
+
+#TC.on_train_end(_)

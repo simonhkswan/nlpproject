@@ -31,8 +31,8 @@ embed_dict=import_embedding('./downloads/PubMed-shuffle-win-2_vocab.txt')
 print('Embedding dictionary loaded, %d vectors in total.'%(len(embed_dict)))
 
 batches = generate_batches(sentences,80,10,embed_dict)
-train=batches[:500]+batches[510:]
-test=batches[500:510]
+train=batches[:500]+batches[580:]
+test=batches[500:580]
 rd.shuffle(test)
 rd.shuffle(train)
 
@@ -96,24 +96,29 @@ for batch in test[1:]:
     vY = np.append(vY,batch[1],axis=0)
 
 epoch=0
+batchNO=0
 #TC.set_model(model)
 #TC.validation_data=(vX,vY)
 logOUT = []
-for batch in train:
-    [x,y] = batch
-    [loss, acc] = model.train_on_batch(x,y)
-    [val_loss,val_acc] = model.test_on_batch(vX,vY)
-    logs = {'acc': acc, 'loss': loss, 'val_loss': val_loss, 'val_acc': val_acc}
-    #TC.on_epoch_end(epoch, logs)
+for i in range(10):
+    for batch in train:
+        [x,y] = batch
+        [loss, acc] = model.train_on_batch(x,y)
+        [val_loss,val_acc] = model.test_on_batch(vX,vY)
+        logs = {'acc': acc, 'loss': loss, 'val_loss': val_loss, 'val_acc': val_acc}
+        #TC.on_epoch_end(epoch, logs)
+        batchNO += 1
+        logOUT.append([epoch,batchNO,loss,acc,val_loss,val_acc])
+        if epoch%50 == 0:
+            print('Epoch: %d Validation accuracy: %f Validation loss: %f'%(epoch, val_acc, val_loss))
     epoch += 1
-    logOUT.append([epoch,loss,acc,val_loss,val_acc])
-    if epoch%50 == 0:
-        print('Epoch: %d Validation accuracy: %f Validation loss: %f'%(epoch, val_acc, val_loss))
 
 print('Saving training logs...')
 with open('./logs/LSTMmodelLOG.csv', 'w') as logFile:
     writer = csv.writer(logFile)
     writer.writerows(logOUT)
+print('Saving model weights...')
+    model.save_weights('./logs/LSTMmodel.h5')
 
 
 #TC.on_train_end(_)

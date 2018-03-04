@@ -118,7 +118,7 @@ with open('./logs/LSTMmodelLOG.csv', 'w') as logFile:
     writer = csv.writer(logFile)
     writer.writerows(logOUT)
 print('Saving model weights...')
-    model.save_weights('./logs/LSTMmodel.h5')
+model.save_weights('./logs/LSTMmodel.h5')
 
 
 #TC.on_train_end(_)

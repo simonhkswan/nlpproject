@@ -94,7 +94,7 @@ batchNO=0
 logOUT = []
 for i in range(10):
     for batch in train:
-        vloss,vacc batch2tot = 0,0,0
+        vloss,vacc,batch2tot = 0,0,0
         for batch2 in test:
             [vx,vy] = batch2
             [val_loss,val_acc] = model.test_on_batch(vx,vy)
@@ -107,7 +107,7 @@ for i in range(10):
         [loss, acc] = model.train_on_batch(x,y)
         batchNO += 1
         logOUT.append([epoch,batchNO,loss,acc,vloss,vacc])
-        if batchNO%100 == 0:
+        if batchNO%200 == 0:
             print('Batch number: %d Validation accuracy: %f Validation loss: %f'%(batchNO, val_acc, val_loss))
     epoch += 1
 

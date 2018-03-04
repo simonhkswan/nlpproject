@@ -93,17 +93,18 @@ batchNO=0
 #TC.validation_data=(vX,vY)
 logOUT = []
 for i in range(10):
+    vloss,vacc,batch2tot = 0,0,0
+    for batch2 in test:
+        #print(batch2)
+        [vx,vy] = batch2
+        [val_loss,val_acc] = model.test_on_batch(vx,vy)
+        vloss += val_loss
+        vacc += val_acc
+        batch2tot += 1
+    vloss = vloss/batch2tot
+    vacc = vacc/batch2tot
+
     for batch in train:
-        vloss,vacc,batch2tot = 0,0,0
-        for batch2 in test:
-            #print(batch2)
-            [vx,vy] = batch2
-            [val_loss,val_acc] = model.test_on_batch(vx,vy)
-            vloss += val_loss
-            vacc += val_acc
-            batch2tot += 1
-        vloss = vloss/batch2tot
-        vacc = vacc/batch2tot
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)
         batchNO += 1

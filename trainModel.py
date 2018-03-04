@@ -30,7 +30,7 @@ print('Embedding dictionary loaded, %d vectors in total.'%(len(embed_dict)))
 batches = generate_batches(sentences,80,10,embed_dict)
 batches2 = generate_batches(sentences2,80,10,embed_dict)
 train=batches[:]
-test=batches2[30:50]
+test=batches2[:]
 rd.shuffle(test)
 rd.shuffle(train)
 
@@ -87,16 +87,6 @@ model.summary()
 
 model_checkpoint = ModelCheckpoint('./logs/LSTMmodel.h5')
 
-vX = test[0][0]
-vY = test[0][1]
-for batch in test[1:]:
-    try:
-        vX = np.append(vX,batch[0],axis=0)
-        vY = np.append(vY,batch[1],axis=0)
-    except ValueError:
-        print('Batch lengths: ',len(batch[0]),len(batch[1]))
-        break
-
 epoch=0
 batchNO=0
 #TC.set_model(model)
@@ -104,15 +94,21 @@ batchNO=0
 logOUT = []
 for i in range(10):
     for batch in train:
+        vloss,vacc batch2tot = 0,0,0
+        for batch2 in test:
+            [vx,vy] = batch2
+            [val_loss,val_acc] = model.test_on_batch(vx,vy)
+            vloss += val_loss
+            vacc += val_acc
+            batch2tot += 1
+        vloss = vloss/batch2tot
+        vacc = vacc/batch2tot
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)
-        [val_loss,val_acc] = model.test_on_batch(vX,vY)
-        logs = {'acc': acc, 'loss': loss, 'val_loss': val_loss, 'val_acc': val_acc}
-        #TC.on_epoch_end(epoch, logs)
         batchNO += 1
-        logOUT.append([epoch,batchNO,loss,acc,val_loss,val_acc])
-        if epoch%50 == 0:
-            print('Epoch: %d Validation accuracy: %f Validation loss: %f'%(epoch, val_acc, val_loss))
+        logOUT.append([epoch,batchNO,loss,acc,vloss,vacc])
+        if batchNO%100 == 0:
+            print('Batch number: %d Validation accuracy: %f Validation loss: %f'%(batchNO, val_acc, val_loss))
     epoch += 1
 
 print('Saving training logs...')

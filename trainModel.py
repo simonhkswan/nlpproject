@@ -6,6 +6,7 @@ from keras.layers import Embedding,LSTM,Dense
 from keras.callbacks import TensorBoard,ModelCheckpoint,Callback
 from keras import backend as K
 from gensim.models import KeyedVectors
+import csv
 
 dl=PATH = './downloads/'
 

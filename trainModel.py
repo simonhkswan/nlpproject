@@ -11,7 +11,8 @@ import csv
 dl=PATH = './downloads/'
 
 maybe_download('http://rgai.inf.u-szeged.hu/project/nlp/bioscope/bioscope.zip')
-maybe_download('https://nofile.io/f/PdTE3n32qNr/PubMed-shuffle-win-2.bin')
+maybe_download('http://rgai.inf.u-szeged.hu/~vinczev/conll2010st/task2_eval.zip')
+
 data = TextData('abstracts.xml')
 data2 = TextData('full_papers.xml')
 

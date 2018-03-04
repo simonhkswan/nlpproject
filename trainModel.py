@@ -38,7 +38,7 @@ rd.shuffle(train)
 batch_size = 10
 
 model = Sequential()
-model.add(word_vectors.get_keras_embedding())
+model.add(word_vectors.get_keras_embedding(train_embeddings=True))
 model.add(LSTM(30,
                activation='tanh', # activation function used
                recurrent_activation='hard_sigmoid', # activation function for recurrent step

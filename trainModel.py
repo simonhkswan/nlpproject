@@ -88,8 +88,7 @@ model.summary()
 
 model_checkpoint = ModelCheckpoint('./logs/LSTMmodel.h5')
 
-epoch=0
-batchNO=0
+epoch=1
 #TC.set_model(model)
 #TC.validation_data=(vX,vY)
 logOUT = []
@@ -104,14 +103,14 @@ for i in range(10):
         batch2tot += 1
     vloss = vloss/batch2tot
     vacc = vacc/batch2tot
-
+    batchNO=0
     for batch in train:
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)
         batchNO += 1
         logOUT.append([epoch,batchNO,loss,acc,vloss,vacc])
         if batchNO%200 == 0:
-            print('Batch number: %d Validation accuracy: %f Validation loss: %f'%(batchNO, val_acc, val_loss))
+            print('Batch number: %d.%d Validation accuracy: %f Validation loss: %f'%(epoch, batchNO, vacc, vloss))
     epoch += 1
 
 print('Saving training logs...')

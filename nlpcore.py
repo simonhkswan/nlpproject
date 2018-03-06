@@ -278,7 +278,7 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
         rd.seed(447)
         rd.shuffle(labels_grouped[i])
 
-        numbatch = int(len(size_grouped[i])/batchsize)
+        numbatch = int(len(size_grouped[i])/batchsize) #currently misses last few batches
         for j in range(numbatch):
             padded = pad_sequences(size_grouped[i][(j)*batchsize:(j+1)*batchsize],
                                    maxlen=l,

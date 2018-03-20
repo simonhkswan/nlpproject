@@ -113,8 +113,9 @@ for i in range(10):
             print('Batch number: %d.%d Validation accuracy: %f Validation loss: %f'%(epoch, batchNO, vacc, vloss))
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)
-        batchNO += 1
+
         logOUT.append([epoch,batchNO,loss,acc,vloss,vacc])
+        batchNO +=1
     epoch += 1
 
 print('Saving training logs...')

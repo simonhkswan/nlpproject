@@ -97,24 +97,24 @@ epoch=1
 #TC.validation_data=(vX,vY)
 logOUT = []
 for i in range(10):
-    vloss,vacc,batch2tot = 0,0,0
-    for batch2 in test:
-        #print(batch2)
-        [vx,vy] = batch2
-        [val_loss,val_acc] = model.test_on_batch(vx,vy)
-        vloss += val_loss
-        vacc += val_acc
-        batch2tot += 1
-    vloss = vloss/batch2tot
-    vacc = vacc/batch2tot
     batchNO=0
     for batch in train:
+        if batchNO%200 == 0:
+            vloss,vacc,batch2tot = 0,0,0
+            for batch2 in test:
+                #print(batch2)
+                [vx,vy] = batch2
+                [val_loss,val_acc] = model.test_on_batch(vx,vy)
+                vloss += val_loss
+                vacc += val_acc
+                batch2tot += 1
+            vloss = vloss/batch2tot
+            vacc = vacc/batch2tot
+            print('Batch number: %d.%d Validation accuracy: %f Validation loss: %f'%(epoch, batchNO, vacc, vloss))
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)
         batchNO += 1
         logOUT.append([epoch,batchNO,loss,acc,vloss,vacc])
-        if batchNO%200 == 0:
-            print('Batch number: %d.%d Validation accuracy: %f Validation loss: %f'%(epoch, batchNO, vacc, vloss))
     epoch += 1
 
 print('Saving training logs...')

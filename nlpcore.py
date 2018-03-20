@@ -268,7 +268,9 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
             certainty = hasNegation(sentence)
             size_grouped[size-1].append(indexed_words)
             labels_grouped[size-1].append([int(certainty),int(speculation)])
+
     batches = []
+    validation_batches = []
 
     l = 0
     for i in range(len(size_grouped)):
@@ -286,9 +288,12 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
                                    padding='pre',
                                    truncating='pre',
                                    value=0)
+            if j%5 == 1:
+                validation_batches.append([padded, np.array(labels_grouped[i][(j)*batchsize:(j+1)*batchsize])])
+            else:
+                batches.append([padded, np.array(labels_grouped[i][(j)*batchsize:(j+1)*batchsize])])
 
-            batches.append([padded, np.array(labels_grouped[i][(j)*batchsize:(j+1)*batchsize])])
-    return(batches)
+    return(batches,validation_batches)
 
 
 def conf_matrix(y_true, y_pred, threshold=50, filename=None, display=True):

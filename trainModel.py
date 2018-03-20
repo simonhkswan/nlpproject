@@ -16,9 +16,11 @@ maybe_download('http://rgai.inf.u-szeged.hu/~vinczev/conll2010st/task2_eval.zip'
 data = TextData('abstracts.xml')
 data2 = TextData('full_papers.xml')
 
-sentences = data.get_sentences()
+sentences1 = data.get_sentences()
 sentences2 = data2.get_sentences()
-print('%d training sentences loaded, %d validation sentences loaded.'%(len(sentences), len(sentences2)))
+sentences = sentences1 + sentences2
+
+print('%d training sentences loaded'%(len(sentences)))
 
 print('Loading word vectors.')
 word_vectors = KeyedVectors.load_word2vec_format('./downloads/PubMed-shuffle-win-2.bin', binary=True)
@@ -28,12 +30,14 @@ print('Embedding mapping saved.')
 embed_dict=import_embedding('./downloads/PubMed-shuffle-win-2_vocab.txt')
 print('Embedding dictionary loaded, %d vectors in total.'%(len(embed_dict)))
 
-batches = generate_batches(sentences,80,10,embed_dict)
-batches2 = generate_batches(sentences2,80,10,embed_dict)
+batches,batches2 = generate_batches(sentences,80,10,embed_dict)
 train=batches[:]
 test=batches2[:]
 rd.shuffle(test)
 rd.shuffle(train)
+
+print('Batches generated: %d training batches, %d validation batches.'%(len(train),len(test)))
+
 
 batch_size = 10
 

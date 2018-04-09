@@ -1,3 +1,4 @@
+import argparse
 from nlpcore import*
 import tensorflow as tf
 from keras.utils import plot_model
@@ -7,6 +8,12 @@ from keras.callbacks import TensorBoard,ModelCheckpoint,Callback
 from keras import backend as K
 from gensim.models import KeyedVectors
 import csv
+
+
+parser = argparse.ArgumentParser(description='Train a selected model and save the training log.')
+parser.add_argument('model_location', metavar='m', type=str)
+parser.add_argument('logs_dest', metavar='l', type = str)
+args = parser.parse_args()
 
 dl=PATH = './downloads/'
 
@@ -38,12 +45,13 @@ rd.shuffle(train)
 
 print('Batches generated: %d training batches, %d validation batches.'%(len(train),len(test)))
 
-exec(compile(open('./models/lstm_double.py')))
+#import the desired model
+exec(compile(source=open(args.model_location).read(),filename=args.model_location,mode='exec'))
 
 #model.load_weights('./logs/wordvec_model.h5',by_name=True)
 model.summary()
 #plot_model(model, to_file='./images/modalityLSTMmodel.png', show_shapes=True)
-model_checkpoint = ModelCheckpoint('./logs/LSTMmodel.h5')
+model_checkpoint = ModelCheckpoint(args.logs_dest+'/model.h5')
 
 epoch=1
 #TC.set_model(model)
@@ -72,7 +80,7 @@ for i in range(10):
     epoch += 1
 
 print('Saving training logs...')
-with open('./logs/LSTMmodelLOG.csv', 'w') as logFile:
+with open(args.logs_dest+'/modelLOG.csv', 'w') as logFile:
     writer = csv.writer(logFile)
     writer.writerows(logOUT)
 
@@ -80,7 +88,7 @@ print('Generating Confusion Matrix')
 
 
 print('Saving model weights...')
-model.save_weights('./logs/LSTMmodel.h5')
+model.save_weights(args.logs_dest+'/model.h5')
 
 
 #TC.on_train_end(_)

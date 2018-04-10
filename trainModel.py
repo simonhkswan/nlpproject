@@ -2,9 +2,7 @@ import argparse
 from nlpcore import*
 import tensorflow as tf
 from keras.utils import plot_model
-from keras.models import Sequential
-from keras.layers import Embedding,LSTM,Dense
-from keras.callbacks import TensorBoard,ModelCheckpoint,Callback
+from keras.callbacks import ModelCheckpoint,Callback
 from keras import backend as K
 from gensim.models import KeyedVectors
 import csv
@@ -54,8 +52,7 @@ model.summary()
 model_checkpoint = ModelCheckpoint(args.logs_dest+'/model.h5')
 
 epoch=1
-#TC.set_model(model)
-#TC.validation_data=(vX,vY)
+
 logOUT = []
 for i in range(10):
     batchNO=0
@@ -104,6 +101,3 @@ with open(args.logs_dest+'/modelLOG.csv', 'w') as logFile:
     writer.writerows(logOUT)
 
 print("Done.")
-
-
-#TC.on_train_end(_)

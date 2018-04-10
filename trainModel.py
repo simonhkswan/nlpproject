@@ -11,6 +11,7 @@ import csv
 parser = argparse.ArgumentParser(description='Train a selected model and save the training log.')
 parser.add_argument('model_location', metavar='m', type=str)
 parser.add_argument('logs_dest', metavar='l', type = str)
+parser.add_argument('embedding_location', metavar='e', type = str)
 args = parser.parse_args()
 
 dl=PATH = './downloads/'
@@ -28,11 +29,11 @@ sentences = sentences1 + sentences2
 print('%d training sentences loaded'%(len(sentences)))
 
 print('Loading word vectors.')
-word_vectors = KeyedVectors.load_word2vec_format('./downloads/PubMed-shuffle-win-2.bin', binary=True)
+word_vectors = KeyedVectors.load_word2vec_format(args.embedding_location, binary=True)
 print('PubMed-shuffle-win-2.bin loaded.')
-word_vectors.save_word2vec_format('./downloads/PubMed-shuffle-win-2.bin', fvocab='./downloads/PubMed-shuffle-win-2_vocab.txt', binary=True)
+word_vectors.save_word2vec_format(args.embedding_location, fvocab=args.embedding_location[:-4]+'_vocab.txt', binary=True)
 print('Embedding mapping saved.')
-embed_dict=import_embedding('./downloads/PubMed-shuffle-win-2_vocab.txt')
+embed_dict=import_embedding(args.embedding_location[:-4]+'_vocab.txt')
 print('Embedding dictionary loaded, %d vectors in total.'%(len(embed_dict)))
 
 batches,batches2 = generate_batches(sentences,80,10,embed_dict)

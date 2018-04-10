@@ -296,7 +296,7 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
     return(batches,validation_batches)
 
 
-def conf_matrix(y_true, y_pred, threshold=50, filename=None, display=True):
+def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename=None, display=False):
 
     cm = confusion_matrix(y_true,y_pred)
     cm2 = normalize(cm,axis=1,norm='l1')
@@ -320,7 +320,7 @@ def conf_matrix(y_true, y_pred, threshold=50, filename=None, display=True):
     plt.yticks(range(height), alphabet[:height])
     plt.ylabel('Actual')
     plt.xlabel('Predicted')
-    plt.title("Confusion Matrix for Certainty Prediction")
+    plt.title("title")
     if type(filename) != None:
         plt.savefig('filename')
     if display:

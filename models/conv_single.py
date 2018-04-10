@@ -1,3 +1,6 @@
+from keras.models import Sequential
+from keras.layers import Embedding,Conv1d,MaxPooling1D,Dense
+
 model = Sequential()
 model.add(word_vectors.get_keras_embedding(train_embeddings=True))
 model.add(Conv1D(30, 5, strides=1,

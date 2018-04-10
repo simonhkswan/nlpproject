@@ -1,3 +1,6 @@
+from keras.models import Sequential
+from keras.layers import Embedding,LSTM,Dense
+
 model = Sequential()
 model.add(word_vectors.get_keras_embedding(train_embeddings=True))
 model.add(LSTM(30,

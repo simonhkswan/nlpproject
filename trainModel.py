@@ -32,7 +32,7 @@ print('%d training sentences loaded'%(len(sentences)))
 
 print('Loading word vectors.')
 word_vectors = KeyedVectors.load_word2vec_format(args.embedding_location, binary=True)
-print('PubMed-shuffle-win-2.bin loaded.')
+print(args.embedding_location+' loaded.')
 word_vectors.save_word2vec_format(args.embedding_location, fvocab=args.embedding_location[:-4]+'_vocab.txt', binary=True)
 print('Embedding mapping saved.')
 embed_dict=import_embedding(args.embedding_location[:-4]+'_vocab.txt')
@@ -83,13 +83,13 @@ for i in range(10):
 
             if vacc > vacc_best:
                 print('Saving model weights...')
-                model.save_weights(args.logs_dest+'/model.h5')
+                model.save_weights(args.logs_dest+'model.h5')
                 vacc_best = vacc
 
             print('Generating Confusion Matrix')
             corr_Y = np.concatenate(VY, axis = 0)
             pred_Y = np.concatenate(PY, axis = 0)
-            conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'/confmatrix/epoch%2d.png'%(epoch))
+            conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/epoch%2d.png'%(epoch))
 
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)
@@ -99,7 +99,7 @@ for i in range(10):
     epoch += 1
 
 print('Saving training logs...')
-with open(args.logs_dest+'/modelLOG.csv', 'w') as logFile:
+with open(args.logs_dest+'modelLOG.csv', 'w') as logFile:
     writer = csv.writer(logFile)
     writer.writerows(logOUT)
 

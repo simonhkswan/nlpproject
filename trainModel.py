@@ -15,6 +15,8 @@ parser.add_argument('embedding_location', metavar='e', type = str)
 args = parser.parse_args()
 
 dl=PATH = './downloads/'
+if not os.path.exists(args.logs_dest):
+    os.makedirs(args.logs_dest)
 
 maybe_download('http://rgai.inf.u-szeged.hu/project/nlp/bioscope/bioscope.zip')
 maybe_download('http://rgai.inf.u-szeged.hu/~vinczev/conll2010st/task2_eval.zip')

@@ -75,7 +75,7 @@ for i in range(10):
                 batch2tot += 1
 
                 VY.append(vy)
-                py = model.test_on_batch(vx)
+                py = model.predict_on_batch(vx)
                 PY.append(py)
 
             vloss = vloss/batch2tot

@@ -90,6 +90,8 @@ for i in range(10):
             corr_Y = np.concatenate(VY, axis = 0)
             pred_Y = np.concatenate(PY, axis = 0)
 
+            if not os.path.exists(args.logs_dest+'confmatrix/'):
+                os.makedirs(args.logs_dest+'confmatrix/')
             conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/epoch%2d.png'%(epoch))
 
         [x,y] = batch

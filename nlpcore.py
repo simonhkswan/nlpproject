@@ -234,6 +234,7 @@ def word2index(words, embed_dict):
 def import_embedding(location):
 
     embed_dict={}
+    embed_dict['UNK']=0
     with open(location, 'r') as fr:
         data = fr.readlines()
         for line in data:

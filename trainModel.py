@@ -36,6 +36,7 @@ print(args.embedding_location+' loaded.')
 word_vectors.save_word2vec_format(args.embedding_location, fvocab=args.embedding_location[:-4]+'_vocab.txt', binary=True)
 print('Embedding mapping saved.')
 embed_dict=import_embedding(args.embedding_location[:-4]+'_vocab.txt')
+
 print('Embedding dictionary loaded, %d vectors in total.'%(len(embed_dict)))
 
 batches,batches2 = generate_batches(sentences,80,10,embed_dict)

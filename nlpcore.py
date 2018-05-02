@@ -300,7 +300,7 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
 
     cm = confusion_matrix(y_true,y_pred)
     cm2 = normalize(cm,axis=1,norm='l1')
-    fig3 = plt.figure(figsize=8,8)
+    fig3 = plt.figure(figsize=(8,8))
     ax3 = fig3.gca()
     res = ax3.imshow(np.array(cm2*100), cmap=plt.cm.RdPu)
     width, height = cm.shape

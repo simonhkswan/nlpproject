@@ -1,9 +1,3 @@
 #!/bin/bash
 
-models=("/models/lstm_double.py")
-
-for $i in "${models[@]}"; do
-echo 'Model: ' $i
-python trainmodel.py -model_location $i -embedding_location /embeddings/wordvec.bin -logs_dest /logs/wordvec1/
-done
-wait
+python trainModel.py models/lstm_double.py logs/lstm1iter17/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin

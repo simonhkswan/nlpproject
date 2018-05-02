@@ -323,6 +323,6 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
     plt.xlabel('Predicted')
     plt.title("title")
     if type(filename) == type('a'):
-        plt.savefig('filename',dpi=300)
+        plt.savefig(filename,dpi=300)
     if display:
         plt.show()

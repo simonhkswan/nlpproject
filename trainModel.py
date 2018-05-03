@@ -97,7 +97,7 @@ for i in range(10):
 
             if not os.path.exists(args.logs_dest+'confmatrix/'):
                 os.makedirs(args.logs_dest+'confmatrix/')
-            print(pred_Y[:,0].shape)
+            print(pred_Y[:].shape)
             conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/epoch%2d.png'%(epoch))
 
         [x,y] = batch

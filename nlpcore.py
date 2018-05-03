@@ -297,8 +297,8 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
     return(batches,validation_batches)
 
 
-def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename=None, display=False):
-    activation = np.linspace(0,1,50)
+def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename=None):
+    activation = np.linspace(-1,1,50)
     f_max = 0
     fs = []
     a_max = 0
@@ -345,8 +345,7 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
     plt.title(title+': F = %.2f A = %.2f'%(f,a_max))
     if type(filename) == type('a'):
         plt.savefig(filename,dpi=300)
-    if display:
-        plt.show()
+    plt.close(fig3)
 
     fig4 = plt.figure(figsize=(8,5))
     ax4 = fig4.gca()
@@ -354,3 +353,4 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
     plt.ylabel('F-Score')
     plt.xlabel('Activation')
     plt.savefig(filename[:-4]+'_Fs.png',dpi=300)
+    plt.close(fig4)

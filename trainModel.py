@@ -7,6 +7,11 @@ from keras import backend as K
 from gensim.models import KeyedVectors
 import csv
 
+###
+#a = np.array([0,0,0,0,0,1,1,1,1,1])
+#b = np.array([0.2,0.1,0.3,0.32,0.7,0.2,0.38,0.6,0.4,0.37])
+#conf_matrix(a,b, filename='conftest.png')
+###
 
 parser = argparse.ArgumentParser(description='Train a selected model and save the training log.')
 parser.add_argument('model_location', metavar='m', type=str)
@@ -92,6 +97,7 @@ for i in range(10):
 
             if not os.path.exists(args.logs_dest+'confmatrix/'):
                 os.makedirs(args.logs_dest+'confmatrix/')
+            print(pred_Y[:,0].shape)
             conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/epoch%2d.png'%(epoch))
 
         [x,y] = batch

@@ -298,9 +298,30 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
 
 
 def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename=None, display=False):
-    y_act = np.where(y_pred>0.5, 1, 0)
+    activation = np.linspace(0,1,50)
+    f_max = 0
+    fs = []
+    a_max = 0
+    for a in activation:
+        y_act = np.where(y_pred>a, 1, 0)
+        cm = confusion_matrix(y_true,y_act)
+        cm2 = normalize(cm,axis=1,norm='l1')
+        p = float(cm2[0][0])
+        r = float(cm2[1][1])
+        f = 2*p*r/(p+r)
+        fs.append(f)
+        if f > f_max:
+            f_max = f
+            a_max = a
+    Fs = np.array(fs)
+
+    y_act = np.where(y_pred>a_max, 1, 0)
     cm = confusion_matrix(y_true,y_act)
     cm2 = normalize(cm,axis=1,norm='l1')
+    p = cm2[0][0]
+    r = cm2[1][1]
+    f = 2*p*r/(p+r)
+
     fig3 = plt.figure(figsize=(8,8))
     ax3 = fig3.gca()
     res = ax3.imshow(np.array(cm2*100), cmap=plt.cm.RdPu)
@@ -321,8 +342,15 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
     plt.yticks(range(height), alphabet[:height])
     plt.ylabel('Actual')
     plt.xlabel('Predicted')
-    plt.title("title")
+    plt.title(title+': F = %.2f A = %.2f'%(f,a_max))
     if type(filename) == type('a'):
         plt.savefig(filename,dpi=300)
     if display:
         plt.show()
+
+    fig4 = plt.figure(figsize=(8,5))
+    ax4 = fig4.gca()
+    ax4.plot(activation,Fs,color=[0.65,0.1,0.18])
+    plt.ylabel('F-Score')
+    plt.xlabel('Activation')
+    plt.savefig(filename[:-4]+'_Fs.png',dpi=300)

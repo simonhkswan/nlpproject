@@ -98,7 +98,8 @@ for i in range(10):
             if not os.path.exists(args.logs_dest+'confmatrix/'):
                 os.makedirs(args.logs_dest+'confmatrix/')
             print(pred_Y[:].shape)
-            conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/epoch%2d.png'%(epoch))
+            conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/cert_epoch%2d.%d.png'%(epoch,batchNO))
+            conf_matrix(corr_Y[:,1], pred_Y[:,1], filename = args.logs_dest+'confmatrix/spec_epoch%2d.%d.png'%(epoch,batchNO))
 
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)

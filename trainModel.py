@@ -58,7 +58,7 @@ epoch=1
 
 logOUT = []
 logOUT.append(['epoch','batchNO','loss','acc','vloss','vacc','cert_f','cert_a','spec_f','spec_a'])
-vloss_best = 0
+vloss_best = 999
 for i in range(10):
     batchNO=0
     for batch in train:

@@ -81,7 +81,7 @@ for i in range(10):
             vloss = vloss/batch2tot
             vacc = vacc/batch2tot
             print('Batch number: %d.%d Validation accuracy: %f Validation loss: %f'%(epoch, batchNO, vacc, vloss))
-            if vloss > vloss_best:
+            if vloss < vloss_best:
                 print('Saving model weights...')
                 model.save_weights(args.logs_dest+'model.h5')
                 vloss_best = vloss

@@ -21,7 +21,7 @@ def maybe_download(DATA_URL):
 
     if not os.path.exists(dl_PATH):
         os.makedirs(dl_PATH)
-        print('Dowloads path created.')
+        print('Downloads path created.')
     filename = DATA_URL.split('/')[-1]
     filepath = os.path.join(dl_PATH, filename)
     if not os.path.exists(filepath):

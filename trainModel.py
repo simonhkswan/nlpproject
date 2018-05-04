@@ -7,12 +7,6 @@ from keras import backend as K
 from gensim.models import KeyedVectors
 import csv
 
-###
-#a = np.array([0,0,0,0,0,1,1,1,1,1])
-#b = np.array([0.2,0.1,0.3,0.32,0.7,0.2,0.38,0.6,0.4,0.37])
-#conf_matrix(a,b, filename='conftest.png')
-###
-
 parser = argparse.ArgumentParser(description='Train a selected model and save the training log.')
 parser.add_argument('model_location', metavar='m', type=str)
 parser.add_argument('logs_dest', metavar='l', type = str)
@@ -55,7 +49,7 @@ print('Batches generated: %d training batches, %d validation batches.'%(len(trai
 #import the desired model
 exec(compile(source=open(args.model_location).read(),filename=args.model_location,mode='exec'))
 
-#model.load_weights('./logs/wordvec_model.h5',by_name=True)
+#model.load_weights('./logs/model.h5',by_name=True)
 model.summary()
 #plot_model(model, to_file='./images/modalityLSTMmodel.png', show_shapes=True)
 model_checkpoint = ModelCheckpoint(args.logs_dest+'/model.h5')
@@ -64,7 +58,7 @@ epoch=1
 
 logOUT = []
 vacc_best = 0
-for i in range(5):
+for i in range(10):
     batchNO=0
     for batch in train:
         if batchNO%200 == 0:
@@ -102,8 +96,8 @@ for i in range(5):
 
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)
-
-        logOUT.append([epoch,batchNO,loss,acc,vloss,vacc])
+        if batchNO%200 == 0:
+            logOUT.append([epoch,batchNO,loss,acc,vloss,vacc])
         batchNO +=1
     epoch += 1
 

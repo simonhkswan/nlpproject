@@ -355,3 +355,5 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
     plt.title('F-Score as a Function of Activation')
     plt.savefig(filename[:-4]+'_Fs.png',dpi=300)
     plt.close(fig4)
+
+    return(f_max, a_max)

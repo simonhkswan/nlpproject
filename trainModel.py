@@ -57,6 +57,7 @@ model_checkpoint = ModelCheckpoint(args.logs_dest+'/model.h5')
 epoch=1
 
 logOUT = []
+logOUT.append(['epoch','batchNO','loss','acc','vloss','vacc','cert_f','cert_a','spec_f','spec_a'])
 vloss_best = 0
 for i in range(10):
     batchNO=0
@@ -91,13 +92,13 @@ for i in range(10):
 
             if not os.path.exists(args.logs_dest+'confmatrix/'):
                 os.makedirs(args.logs_dest+'confmatrix/')
-            conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/cert_epoch%2d.%d.png'%(epoch,batchNO))
-            conf_matrix(corr_Y[:,1], pred_Y[:,1], filename = args.logs_dest+'confmatrix/spec_epoch%2d.%d.png'%(epoch,batchNO))
+            cert_f, cert_a = conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/cert_epoch%2d.%d.png'%(epoch,batchNO))
+            spec_f, spec_a = conf_matrix(corr_Y[:,1], pred_Y[:,1], filename = args.logs_dest+'confmatrix/spec_epoch%2d.%d.png'%(epoch,batchNO))
 
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)
         if batchNO%200 == 0:
-            logOUT.append([epoch,batchNO,loss,acc,vloss,vacc])
+            logOUT.append([epoch,batchNO,loss,acc,vloss,vacc,cert_f,cert_a,spec_f,spec_a])
         batchNO +=1
     epoch += 1
 

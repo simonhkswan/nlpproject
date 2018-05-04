@@ -57,7 +57,7 @@ model_checkpoint = ModelCheckpoint(args.logs_dest+'/model.h5')
 epoch=1
 
 logOUT = []
-vacc_best = 0
+vloss_best = 0
 for i in range(10):
     batchNO=0
     for batch in train:
@@ -80,10 +80,10 @@ for i in range(10):
             vloss = vloss/batch2tot
             vacc = vacc/batch2tot
             print('Batch number: %d.%d Validation accuracy: %f Validation loss: %f'%(epoch, batchNO, vacc, vloss))
-            if vacc > vacc_best:
+            if vloss > vloss_best:
                 print('Saving model weights...')
                 model.save_weights(args.logs_dest+'model.h5')
-                vacc_best = vacc
+                vloss_best = vloss
 
             print('Generating Confusion Matrix')
             corr_Y = np.concatenate(VY, axis = 0)

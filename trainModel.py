@@ -97,7 +97,7 @@ for i in range(10):
             spec_f, spec_a = conf_matrix(corr_Y[:], pred_Y[:], filename = args.logs_dest+'confmatrix/spec_epoch%2d.%d.png'%(epoch,batchNO))
 
         [x,y] = batch
-        [loss, acc] = model.train_on_batch(x,y)
+        [loss, acc] = model.train_on_batch(x,y[...,1])
         if batchNO%200 == 0:
             logOUT.append([epoch,batchNO,loss,acc,vloss,vacc,neg_f,neg_a,spec_f,spec_a])
         batchNO +=1

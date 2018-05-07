@@ -26,8 +26,8 @@ model.add(LSTM(30,
                go_backwards=False,
                stateful=False, # If True, the last state for each sample at index i in a batch will be used as initial state for the sample of index i in the following batch.
                unroll=False)) # whether the network will be unrolled, otherwise a symbolic loop will be used.
-model.add(Dense(1,
-                activation='tanh',
+model.add(Dense(2,
+                activation='softmax',
                 use_bias=True,
                 kernel_initializer='glorot_uniform',
                 bias_initializer='zeros',

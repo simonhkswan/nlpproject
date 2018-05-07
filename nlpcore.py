@@ -298,7 +298,6 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
 
 
 def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename=None):
-    print(y_true,y_pred)
     activation = np.linspace(-1,1,50)
     f_max = 0
     fs = []

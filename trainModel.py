@@ -41,7 +41,7 @@ print('Embedding dictionary loaded, %d vectors in total.'%(len(embed_dict)))
 batches,batches2 = generate_batches(sentences,80,10,embed_dict)
 train=batches[:]
 test=batches2[:]
-rd.seed(46591)
+rd.seed(46594)
 rd.shuffle(test)
 rd.shuffle(train)
 

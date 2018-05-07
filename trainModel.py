@@ -58,7 +58,7 @@ model_checkpoint = ModelCheckpoint(args.logs_dest+'/model.h5')
 epoch=1
 
 logOUT = []
-logOUT.append(['epoch','batchNO','loss','acc','vloss','vacc','neg_f','neg_a','spec_f','spec_a'])
+logOUT.append(['epoch','batchNO','loss','acc','vloss','vacc','spec_f','spec_a'])
 vloss_best = 999
 for i in range(10):
     batchNO=0
@@ -99,7 +99,7 @@ for i in range(10):
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y[...,1])
         if batchNO%200 == 0:
-            logOUT.append([epoch,batchNO,loss,acc,vloss,vacc,neg_f,neg_a,spec_f,spec_a])
+            logOUT.append([epoch,batchNO,loss,acc,vloss,vacc,spec_f,spec_a])
         batchNO +=1
     epoch += 1
 

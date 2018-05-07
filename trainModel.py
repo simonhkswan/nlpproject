@@ -90,11 +90,11 @@ for i in range(10):
             print('Generating Confusion Matrix')
             corr_Y = np.concatenate(VY, axis = 0)
             pred_Y = np.concatenate(PY, axis = 0)
-            
+
             if not os.path.exists(args.logs_dest+'confmatrix/'):
                 os.makedirs(args.logs_dest+'confmatrix/')
             #neg_f, neg_a = conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/neg_epoch%2d.%d.png'%(epoch,batchNO))
-            spec_f, spec_a = conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/spec_epoch%2d.%d.png'%(epoch,batchNO))
+            spec_f, spec_a = conf_matrix(corr_Y[:,1], pred_Y[:,1], filename = args.logs_dest+'confmatrix/spec_epoch%2d.%d.png'%(epoch,batchNO))
 
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)

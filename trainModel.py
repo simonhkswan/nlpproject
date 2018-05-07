@@ -70,12 +70,12 @@ for i in range(10):
             for batch2 in test:
                 #print(batch2)
                 [vx,vy] = batch2
-                [val_loss,val_acc] = model.test_on_batch(vx,vy[...,1])
+                [val_loss,val_acc] = model.test_on_batch(vx,vy)
                 vloss += val_loss
                 vacc += val_acc
                 batch2tot += 1
 
-                VY.append(vy[...,1])
+                VY.append(vy)
                 py = model.predict_on_batch(vx)
                 PY.append(py)
 
@@ -94,10 +94,10 @@ for i in range(10):
             if not os.path.exists(args.logs_dest+'confmatrix/'):
                 os.makedirs(args.logs_dest+'confmatrix/')
             #neg_f, neg_a = conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/neg_epoch%2d.%d.png'%(epoch,batchNO))
-            spec_f, spec_a = conf_matrix(corr_Y[:], pred_Y[:], filename = args.logs_dest+'confmatrix/spec_epoch%2d.%d.png'%(epoch,batchNO))
+            spec_f, spec_a = conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/spec_epoch%2d.%d.png'%(epoch,batchNO))
 
         [x,y] = batch
-        [loss, acc] = model.train_on_batch(x,y[...,1])
+        [loss, acc] = model.train_on_batch(x,y)
         if batchNO%200 == 0:
             logOUT.append([epoch,batchNO,loss,acc,vloss,vacc,spec_f,spec_a])
         batchNO +=1

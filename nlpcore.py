@@ -308,7 +308,10 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
         cm2 = normalize(cm,axis=1,norm='l1')
         p = float(cm2[0][0])
         r = float(cm2[1][1])
-        f = 2*p*r/(p+r)
+        try:
+            f = 2*p*r/(p+r)
+        except ZeroDivisionError:
+            f = 0
         fs.append(f)
         if f > f_max:
             f_max = f

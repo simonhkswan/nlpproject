@@ -14,6 +14,9 @@ parser.add_argument('embedding_location', metavar='e', type = str)
 parser.add_argument('--value', type = int)
 args = parser.parse_args()
 
+print(args.model_location, args.logs_dest, args.embedding_location, args.value)
+
+
 dl=PATH = './downloads/'
 if not os.path.exists(args.logs_dest):
     os.makedirs(args.logs_dest)

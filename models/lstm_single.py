@@ -3,7 +3,7 @@ from keras.layers import Embedding,LSTM,Dense
 
 model = Sequential()
 model.add(word_vectors.get_keras_embedding(train_embeddings=True))
-model.add(LSTM(30,
+model.add(LSTM(args.i,
                activation='tanh', # activation function used
                recurrent_activation='hard_sigmoid', # activation function for recurrent step
                use_bias=True, # whether the layer uses a bias vector

@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(description='Train a selected model and save th
 parser.add_argument('model_location', metavar='m', type=str)
 parser.add_argument('logs_dest', metavar='l', type = str)
 parser.add_argument('embedding_location', metavar='e', type = str)
-#parser.add_argument('--value', type = int)
+parser.add_argument('--value', type = int)
 args = parser.parse_args()
 
 

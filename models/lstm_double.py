@@ -1,5 +1,8 @@
 from keras.models import Sequential
 from keras.layers import Embedding,LSTM,Dense
+#from gensim.models import KeyedVectors
+
+#word_vectors = KeyedVectors.load_word2vec_format('./embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin', binary=True)
 
 model = Sequential()
 model.add(word_vectors.get_keras_embedding(train_embeddings=True))
@@ -42,3 +45,6 @@ model.compile(optimizer='RMSprop',
               sample_weight_mode=None,
               weighted_metrics=None,
               target_tensors=None)
+
+#from keras.utils import plot_model
+#plot_model(model,show_shapes=True, show_layer_names=False, to_file='model.png')

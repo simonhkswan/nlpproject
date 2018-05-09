@@ -8,6 +8,7 @@ parser = argparse.ArgumentParser(description='Evaluate a selected model and save
 parser.add_argument('model_location', metavar='m', type=str)
 parser.add_argument('logs_dest', metavar='l', type = str)
 parser.add_argument('embedding_location', metavar='e', type = str)
+parser.add_argument('--value', type = int)
 args = parser.parse_args()
 
 maybe_download('http://rgai.inf.u-szeged.hu/~vinczev/conll2010st/task2_eval.zip')

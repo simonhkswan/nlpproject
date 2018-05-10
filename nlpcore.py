@@ -308,7 +308,7 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
         cm = confusion_matrix(y_true,y_act)
         cm2 = normalize(cm,axis=1,norm='l1')
         p = float(cm2[1][1])
-        r = float(cm[1][1]/(cm[1][1]+cm[1][0]))
+        r = float(cm[1][1]/(cm[1][1]+cm[0][1]))
         try:
             f = 2*p*r/(p+r)
         except ZeroDivisionError:

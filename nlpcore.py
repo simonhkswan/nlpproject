@@ -327,8 +327,6 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
     f = 2*p*r/(p+r)
 
     fig3 = plt.figure(figsize=(8,8))
-    plt.rc('text', usetex=True)
-    plt.rc('font', family='serif')
     ax3 = fig3.gca()
     res = ax3.imshow(np.array(cm2*100), cmap=plt.cm.RdPu)
     width, height = cm.shape
@@ -338,7 +336,7 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
         for y in range(height):
             if cm2[x][y] < threshold: col = [0,0,0]
             else: col = [1,1,1]
-            ax3.annotate('%d\n(%.1f\%)'%(cm[x][y],cm2[x][y]*100), xy=(y, x),
+            ax3.annotate('%d\n(%.1f%%)'%(cm[x][y],cm2[x][y]*100), xy=(y, x),
                         horizontalalignment='center',
                         verticalalignment='center',color=col)
 

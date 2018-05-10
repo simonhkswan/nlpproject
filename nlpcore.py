@@ -323,10 +323,12 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
     cm = confusion_matrix(y_true,y_act)
     cm2 = normalize(cm,axis=1,norm='l1')
     p = cm2[0][0]
-    r = cm2[1][1]
+    r = float(cm[1][1]/(cm[1][1]+cm[0][1]))
     f = 2*p*r/(p+r)
 
     fig3 = plt.figure(figsize=(8,8))
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif')
     ax3 = fig3.gca()
     res = ax3.imshow(np.array(cm2*100), cmap=plt.cm.RdPu)
     width, height = cm.shape

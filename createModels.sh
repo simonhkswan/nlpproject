@@ -9,7 +9,8 @@
 
 #python trainModel.py models/lstm_single_embedDual.py logs/lstm2iter17_dual/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin
 #python evaluateModel.py models/lstm_single_embedDual.py logs/lstm2iter17_dual/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin
-hidden=("10" "80" "90" "100" "150" "200")
+
+hidden=("10" "20" "30")
 
 for v in "${hidden[@]}"
 do

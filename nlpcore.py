@@ -322,7 +322,7 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
     y_act = np.where(y_pred>a_max, 1, 0)
     cm = confusion_matrix(y_true,y_act)
     cm2 = normalize(cm,axis=1,norm='l1')
-    p = cm2[0][0]
+    p = cm2[1][1]
     r = float(cm[1][1]/(cm[1][1]+cm[0][1]))
     f = 2*p*r/(p+r)
 

@@ -356,6 +356,8 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
     ax4.plot(activation,Fs,color=[0.65,0.1,0.18])
     plt.ylabel('F-Score')
     plt.xlabel('Activation')
+    plt.xlim(-1,1)
+    plt.ylim(0,1)
     plt.title('F-Score as a Function of Activation')
     plt.savefig(filename[:-4]+'_Fs.png',dpi=300)
     plt.close(fig4)

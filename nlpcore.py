@@ -298,7 +298,7 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
     return(batches,validation_batches)
 
 
-def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename=None):
+def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename=None,cType=1):
     activation = np.linspace(-1,1,50)
     f_max = 0
     fs = []
@@ -328,7 +328,10 @@ def conf_matrix(y_true, y_pred, title='Confusion Matrix', threshold=50, filename
 
     fig3 = plt.figure(figsize=(8,8))
     ax3 = fig3.gca()
-    res = ax3.imshow(np.array(cm2*100), cmap=plt.cm.GnBu)
+    if cType == 1:
+        res = ax3.imshow(np.array(cm2*100), cmap=plt.cm.GnBu)
+    else:
+        res = ax3.imshow(np.array(cm2*100), cmap=plt.cm.RdPu)
     width, height = cm.shape
     threshold = 0.5
 

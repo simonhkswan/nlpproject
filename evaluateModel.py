@@ -53,4 +53,4 @@ pred_Y = np.concatenate(PY, axis = 0)
 
 if not os.path.exists(args.logs_dest+'confmatrix/'):
     os.makedirs(args.logs_dest+'confmatrix/')
-spec_f, spec_a = conf_matrix(corr_Y[:,1], pred_Y[:,1], filename = args.logs_dest+'confmatrix/spec_validation.png')
+spec_f, spec_a = conf_matrix(corr_Y[:,1], pred_Y[:,1], filename = args.logs_dest+'confmatrix/spec_validation.png',cType=0)

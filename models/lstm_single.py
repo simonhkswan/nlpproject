@@ -36,7 +36,7 @@ model.add(Dense(2,
                 activity_regularizer=None,
                 kernel_constraint=None,
                 bias_constraint=None))
-model.compile(optimizer='RMSprop',
+model.compile(optimizer='Adadelta',
               loss='binary_crossentropy',
               metrics=['acc'],
               sample_weight_mode=None,

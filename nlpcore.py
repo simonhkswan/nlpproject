@@ -268,8 +268,8 @@ def generate_batches(sentences, maxlen, batchsize, embed_dict):
             speculation = hasSpeculation(sentence)
             negation = hasNegation(sentence)
             size_grouped[size-1].append(indexed_words)
-            #labels_grouped[size-1].append([1-int(speculation),int(speculation)])
-            labels_grouped[size-1].append([int(negation),int(speculation)])
+            labels_grouped[size-1].append([1-int(speculation),int(speculation)])
+            #labels_grouped[size-1].append([int(negation),int(speculation)])
 
     batches = []
     validation_batches = []

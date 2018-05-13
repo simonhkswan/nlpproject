@@ -9,7 +9,7 @@ fixed = word_vectors.get_keras_embedding(train_embeddings=False)(model_input)
 free = word_vectors.get_keras_embedding(train_embeddings=True)(model_input)
 combined = Average()([free,fixed])
 
-lstm = LSTM(30,
+lstm = LSTM(args.value,
                activation='tanh', # activation function used
                recurrent_activation='hard_sigmoid', # activation function for recurrent step
                use_bias=True, # whether the layer uses a bias vector
@@ -45,7 +45,7 @@ output = Dense(2,
 
 model = Model(inputs=[model_input], outputs=[output])
 
-model.compile(optimizer='RMSprop',
+model.compile(optimizer='Adadelta',
               loss='binary_crossentropy',
               metrics=['acc'],
               sample_weight_mode=None,

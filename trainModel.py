@@ -62,6 +62,7 @@ epoch=1
 logOUT = []
 logOUT.append(['epoch','batchNO','loss','acc','vloss','vacc','spec_f','spec_a'])
 vloss_best = 999
+spec_f_best = 0
 for i in range(10):
     batchNO=0
     for batch in train:
@@ -97,6 +98,10 @@ for i in range(10):
                 os.makedirs(args.logs_dest+'confmatrix/')
             #neg_f, neg_a = conf_matrix(corr_Y[:,0], pred_Y[:,0], filename = args.logs_dest+'confmatrix/neg_epoch%2d.%d.png'%(epoch,batchNO),cType=1)
             spec_f, spec_a = conf_matrix(corr_Y[:,1], pred_Y[:,1], filename = args.logs_dest+'confmatrix/neg_epoch%2d.%d.png'%(epoch,batchNO),cType=0)
+            if spec_f > spec_f_best:
+                print('Saving model weights...')
+                model.save_weights(args.logs_dest+'modelF.h5')
+                spec_f_best = spec_f
 
         [x,y] = batch
         [loss, acc] = model.train_on_batch(x,y)

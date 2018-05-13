@@ -32,10 +32,10 @@ python trainModel.py models/lstm_single_dropout.py logs/lstm2iter17_drop_hid100/
 python evaluateModel.py models/lstm_single_dropout.py logs/lstm1iter17_drop_hid100/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin --value 100
 
 python trainModel.py models/lstm_single.py logs/lstm2iter17_hid100/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin --value 100
-python evaluateModel.py models/lstm_single.py logs/lstm1iter17_hid100/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin --value 100
+python evaluateModel.py models/lstm_single.py logs/lstm2iter17_hid100/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin --value 100
 
 python trainModel.py models/lstm_single_embedDual.py logs/lstm2iter17_dual_hid100/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin --value 100
 python evaluateModel.py models/lstm_single_embedDual.py logs/lstm1iter17_dual_hid100/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin --value 100
 
 python trainModel.py models/lstm_single_embedFixed.py logs/lstm2iter17_fix_hid100/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin --value 100
-python evaluateModel.py models/lstm_single_embedFixed.py logs/lstm1iter17_fix_hid100/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin --value 100
+python evaluateModel.py models/lstm_single_embedFixed.py logs/lstm2iter17_fix_hid100/ embeddings/low_shuff_combine_tokenized.txt-iter17-min5.bin --value 100

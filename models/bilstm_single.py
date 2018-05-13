@@ -23,7 +23,7 @@ model.add(Bidirectional(
                recurrent_constraint=None, # constraint function applied to the recurrent kernal
                bias_constraint=None, # constraint function applied to the bias vector
                dropout=0.0, # fraction of units to drop for the linear transformation of the inputs
-               recurrent_dropout=0.0, # fraction of units to drop for the linear transformation of the recurrent state
+               recurrent_dropout=0.2, # fraction of units to drop for the linear transformation of the recurrent state
                implementation=1, # implementation mode, either 1 or 2.
                return_sequences=False,
                return_state=False,

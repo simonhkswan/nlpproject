@@ -42,7 +42,7 @@ def maybe_download(DATA_URL):
 class TextData(object):
 
     def __init__(self, xml):
-        with open(dl_PATH+xml) as fd:
+        with open(dl_PATH+xml, encoding='utf-8') as fd:
             self.ETree = ET.parse(fd)
 
     def totaldocNo(self):
